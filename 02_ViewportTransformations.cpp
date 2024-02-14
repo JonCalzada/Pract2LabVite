@@ -51,9 +51,9 @@ Mesh      * mesh;
 int       screenWidth = 600, screenHeight = 600;
 
 // Camera definition (XYZ position)
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f),
-              glm::vec3(0.0f, 0.0f, -1.0f),
-              glm::vec3(0.0f, 1.0f, 0.0f));
+Camera camera(glm::vec3(0.0f, 3.0f, 3.0f), //Posicion
+              glm::vec3(0.0f, 0.0f, -1.0f),//Direccion-vista
+              glm::vec3(0.0f, 1.0f, 0.0f)); //orientacion
 
 Vertex modelPosition;
 
@@ -127,11 +127,11 @@ bool Start() {
     // Init geometries
     // Triangle tri(0.5f);
     // MathFunction mfunc(0.5f);
-    Triangle3D tri3D(0.5f);
+    //Triangle3D tri3D(0.5f);
 
     // 1. Ejercicio 1: Pirámide de base cuadrada
-    // Piramide piramide;
-    mesh = new Mesh(tri3D.vertices, tri3D.indices);
+     Piramide piramide;
+    mesh = new Mesh(piramide.vertices,piramide.indices);
     if (mesh == nullptr) {
         cout << "Error creating mesh object." << endl;
         return false;
@@ -156,10 +156,10 @@ bool Update() {
 
         // Aplicamos transformaciones de proyección y cámara (si las hubiera)
         // Ejercicio 3. Proyección ortogonal
-        glm::mat4 projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 1000.0f);
+        //glm::mat4 projection = glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, 0.1f, 1000.0f);
         
         // Ejercicio 4. Proyección en perspectiva
-        // glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 1000.0f);
+         glm::mat4 projection = glm::perspective(glm::radians(45.0f), (float)screenWidth / (float)screenHeight, 0.1f, 1000.0f);
         
         myShader->setMat4("projection", projection);
 
@@ -171,7 +171,7 @@ bool Update() {
         model = glm::translate(model, glm::vec3(modelPosition.Position.x, 
                                                 modelPosition.Position.y,
                                                 modelPosition.Position.z));
-        model = glm::rotate(model, glm::radians(0.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+        model = glm::rotate(model, glm::radians(45.0f), glm::vec3(1.0f, 0.0f, 0.0f));
         model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));	
         myShader->setMat4("model", model);
 
